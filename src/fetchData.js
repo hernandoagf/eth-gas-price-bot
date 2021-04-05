@@ -1,35 +1,19 @@
-const gql = require('graphql-tag')
-const { GraphQLWrapper } = require('@aragon/connect-thegraph')
 const dotenv = require('dotenv')
+const fetch = require('node-fetch')
 
 dotenv.config()
 
-const SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/1hive/uniswap-v2'
+exports.fetchData = async () => {
+  try {
+    const tokenData = await (await fetch(`https://api.coingecko.com/api/v3/coins/${process.env.TOKEN_ID}`)).json()
 
-const PRICE_QUERY = gql`
-  query {
-    token(id: "${process.env.TOKEN_ID}") {
-      derivedETH
-      symbol
-    }
+    const price = tokenData.market_data.current_price.usd
+    const symbol = tokenData.symbol.toUpperCase()
+    const circSupply = tokenData.market_data.circulating_supply
+
+    return { price, symbol, circSupply }
+  } catch (err) {
+    console.log(err)
+    return undefined
   }
-`
-
-const fetchData = async () => {
-  const graphqlClient = new GraphQLWrapper(SUBGRAPH_URL)
-  const result = await graphqlClient.performQuery(PRICE_QUERY)
-
-  if (!result.data) return undefined
-  return result
-}
-
-exports.getTokenPrice = async () => {
-  const res = await fetchData()
-  const price = parseFloat(res.data.token.derivedETH).toFixed(2)
-  return price
-}
-
-exports.getTokenSymbol = async () => {
-  const res = await fetchData()
-  return res.data.token.symbol
 }

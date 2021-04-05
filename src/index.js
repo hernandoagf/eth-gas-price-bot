@@ -1,8 +1,7 @@
 const { Client } = require('discord.js')
 const dotenv = require('dotenv')
-const { getTokenPrice, getTokenSymbol } = require('./fetchData')
-const { getCoingeckoCircSupply } = require('./fetchMarketCap')
 
+const { fetchData } = require('./fetchData')
 const { numberWithCommas } = require('./utils')
 
 dotenv.config()
@@ -10,13 +9,15 @@ dotenv.config()
 const client = new Client()
 
 // eslint-disable-next-line
-client.on('ready', () => console.log(`Bot successfully started as ${client.user.tag} 🐝`))
+client.on('ready', () => console.log(`Bot successfully started as ${client.user.tag} 🤖`))
 
 // Updates token price on bot's nickname every X amount of time
 client.setInterval(async () => {
-  const price = await getTokenPrice()
-  const symbol = await getTokenSymbol()
-  const circSupply = await getCoingeckoCircSupply(symbol)
+  const data = await fetchData()
+
+  if (!data) return
+
+  const { price, symbol, circSupply } = data
 
   client.guilds.cache.forEach(async (guild) => {
     const botMember = guild.me

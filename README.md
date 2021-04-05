@@ -1,10 +1,10 @@
-# Price bee
+# Price bot
 
-A Discord bot to show token prices.
+A Discord bot that fetches and shows token data from Coingecko.
 
 ## Quickstart
 
-<a href="https://heroku.com/deploy?template=https://github.com/1Hive/price-bee">
+<a href="https://heroku.com/deploy?template=https://github.com/hernandoagf/price-bot-coingecko">
 <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
 </a>
 
@@ -27,4 +27,4 @@ First, install the dependencies:
 For the bot to run, it needs these variables, laid out in the `.env.sample` file:
 
 - `DISCORD_API_TOKEN`: Your discord API token. [See this guide on how to obtain one](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token).
-- `TOKEN_ID`: Your token ID on Honeyswap.
+- `TOKEN_ID`: Your token ID on CoinGecko. (The identifier on the CoinGecko URL of your token).
