@@ -2,7 +2,6 @@ const { Client } = require('discord.js')
 const dotenv = require('dotenv')
 
 const { fetchData } = require('./fetchData')
-const { numberWithCommas } = require('./utils')
 
 dotenv.config()
 
@@ -17,15 +16,15 @@ client.setInterval(async () => {
 
   if (!data) return
 
-  const { price, symbol, circSupply } = data
+  const { gasPriceGwei, gasPriceUsd } = data
 
   client.guilds.cache.forEach(async (guild) => {
     const botMember = guild.me
-    await botMember.setNickname(`${symbol}: $${numberWithCommas(price)}`)
+    await botMember.setNickname(`Gas: $${gasPriceGwei} gwei`)
   })
 
   client.user.setActivity(
-    `MC: $${numberWithCommas(Math.round(price * circSupply))}`,
+    `price usd: $${parseFloat(gasPriceUsd).toFixed(2)}`,
     { type: 'WATCHING' },
   )
 }, 1 * 60 * 1000)

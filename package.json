@@ -1,7 +1,7 @@
 {
-  "name": "price-bot-coingecko",
+  "name": "eth-gas-price-bot",
   "version": "1.0.0",
-  "description": "A Discord bot to show token prices.",
+  "description": "A Discord bot to show Ethereum gas price.",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
@@ -9,8 +9,8 @@
   },
   "keywords": [
     "discord",
-    "token",
-    "coingecko",
+    "ethereum",
+    "gas",
     "crypto"
   ],
   "author": "Hernando Guzmán",

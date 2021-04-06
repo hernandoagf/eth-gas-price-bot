@@ -5,13 +5,17 @@ dotenv.config()
 
 exports.fetchData = async () => {
   try {
-    const tokenData = await (await fetch(`https://api.coingecko.com/api/v3/coins/${process.env.TOKEN_ID}`)).json()
+    const { result: { ProposeGasPrice: gasPriceGwei } } = await (await fetch(
+      `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${process.env.ETHERSCAN_API_KEY}`,
+    )).json()
 
-    const price = tokenData.market_data.current_price.usd
-    const symbol = tokenData.symbol.toUpperCase()
-    const circSupply = tokenData.market_data.circulating_supply
+    const { result: { ethusd: ethPrice } } = await (await fetch(
+      `https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${process.env.ETHERSCAN_API_KEY}`,
+    )).json()
 
-    return { price, symbol, circSupply }
+    const gasPriceUsd = +gasPriceGwei * 0.000000001 * +ethPrice * 21000
+
+    return { gasPriceGwei, gasPriceUsd }
   } catch (err) {
     console.log(err)
     return undefined
