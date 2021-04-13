@@ -20,11 +20,11 @@ client.setInterval(async () => {
 
   client.guilds.cache.forEach(async (guild) => {
     const botMember = guild.me
-    await botMember.setNickname(`Gas: $${gasPriceGwei} gwei`)
+    await botMember.setNickname(`Gas: ${gasPriceGwei} gwei`)
   })
 
   client.user.setActivity(
-    `price usd: $${parseFloat(gasPriceUsd).toFixed(2)}`,
+    `price USD: $${parseFloat(gasPriceUsd).toFixed(2)}`,
     { type: 'WATCHING' },
   )
 }, 1 * 60 * 1000)
