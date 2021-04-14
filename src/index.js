@@ -24,7 +24,7 @@ client.setInterval(async () => {
   })
 
   client.user.setActivity(
-    `price USD: $${parseFloat(gasPriceUsd).toFixed(2)}`,
+    `transfer fee: $${parseFloat(gasPriceUsd).toFixed(2)}`,
     { type: 'WATCHING' },
   )
 }, 1 * 60 * 1000)
